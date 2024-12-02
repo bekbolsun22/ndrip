@@ -1,0 +1,45 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  npub         String @id
+  adminNpub    String
+  addTimestamp Int
+}
+
+model Sender {
+  user         String
+  npub         String
+  nip46Key     String
+  addTimestamp Int
+
+  @@id([user, npub])
+}
+
+model DirectMessage {
+  user         String
+  id           String
+  content      String
+  addTimestamp Int
+
+  @@id([user, id])
+}
+
+model Send {
+  user          String
+  id            String
+  dmId          String
+  senderNpub    String
+  npub          String
+  addTimestamp  Int
+  whenTimestamp Int
+  status        String
+
+  @@id([user, id])
+}
